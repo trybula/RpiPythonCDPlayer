@@ -1,4 +1,4 @@
-# <strong>Raspberry Pi CD Player </Strong> (in python)
+# <strong>Raspberry Pi CD Player </Strong> <sub>(in python)</sub>
 A simple and very lightweight cd player written in python (using vlc) made for raspberry pi (in my case Rpi 3b+, but it uses ~1.5% Cpu) with 1602 lcd and six buttons.
 
 ## Why i made it?
@@ -16,7 +16,7 @@ Some time ago i made an amplifier using tpa3116 (i will put the shematic someday
 <ul>
   <li>Pip</li>
     <ul>
-      <li>pycdio</li>
+      <li>pycdio (❗ I couldn't install it on windows idk why, on linux on rpi it installed flawlessy)</li>
       <li>setuptools </li>
       <li>pytest  </li>
       <li>gpep517  </li>  
@@ -35,7 +35,7 @@ Some time ago i made an amplifier using tpa3116 (i will put the shematic someday
       <li>swig</li>
       <li>cython</li>
       <li>libdiscid0-dev</li>
-      <li>python3-pip</li>
+      <li>python3-pip (I assume that python is already installed by default)</li>
       <li>vlc</li>
     </ul>
   <li>Useful links</li>
