@@ -6,8 +6,6 @@ Some time ago i made an amplifier using tpa3116 (i will put the shematic someday
 
 ## What is not yet done?
 -airplay integration<br>
--text scrolling<br>
--scrobbler<br>
 -maybe spotify connect<br>
 -maybe usb playback<br>
 -maybe webui as an alternative to buttons<br>
