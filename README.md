@@ -28,6 +28,7 @@ Some time ago i made an amplifier using tpa3116 (i will put the shematic someday
       <li>board</li>
       <li>adafruit-circuitpython-charlcd</li>
       <li>digitalio</li>
+      <li>pylast <sub>if you want scrobbler</sub></li>
     </ul>
   <li>Apt</li>
     <ul>
