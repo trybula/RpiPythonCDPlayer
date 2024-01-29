@@ -8,6 +8,7 @@ Some time ago i made an amplifier using tpa3116 (i will put the shematic someday
 -airplay integration<br>
 -maybe spotify connect<br>
 -maybe usb playback<br>
+-maybe eink instead of lcd<br>
 -maybe webui as an alternative to buttons<br>
 ...<br>
 
