@@ -46,5 +46,6 @@ Some time ago i made an amplifier using tpa3116 (i will put the shematic someday
       <li><a href="https://www.youtube.com/watch?v=cVdSc8VYVBM">1602 LCD setup</a></li>
       <li><a href="https://pimylifeup.com/raspberry-pi-airplay-receiver/">Airplay setup</a></li>
       <li><a href="https://medium.com/@gamunu/enable-high-quality-audio-on-linux-6f16f3fe7e1f">PulseAudio quality settings</a></li>
+      <li><a href="https://peppe8o.com/epaper-eink-raspberry-pi/">Epaper display tutorial (EPD comming soon)</li>
     </ul>
 </ul>
