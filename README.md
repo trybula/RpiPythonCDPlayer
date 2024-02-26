@@ -48,5 +48,6 @@ Some time ago i made an amplifier using tpa3116 (i will put the shematic someday
       <li><a href="https://medium.com/@gamunu/enable-high-quality-audio-on-linux-6f16f3fe7e1f">PulseAudio quality settings</a></li>
       <li><a href="https://peppe8o.com/epaper-eink-raspberry-pi/">Epaper display tutorial (EPD comming soon)</a></li>
       <li><a href="https://github.com/nicokaiser/rpi-audio-receiver">Bluetooth</a></li>
+      <li><a href="https://stackoverflow.com/questions/74657226/receiving-audio-data-and-metadata-from-iphone-over-bluetooth-python">Bluetooth metadata readout</a></li>
     </ul>
 </ul>
