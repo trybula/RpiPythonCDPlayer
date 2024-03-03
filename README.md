@@ -5,10 +5,8 @@ A simple and very lightweight cd player written in python (using vlc) made for r
 Some time ago i made an amplifier using tpa3116 (i will put the shematic someday) to replace my cheap Panasonic. As i was suprised with change of quality event with same speakers i thought that it would also be nice if i made an cd player (i mostly play music from my cd collection). For ~1.5 year i was using either [Volumio](https://volumio.com/en/get-started/)  and [Raudio](https://github.com/rern/raudio). Why either? Each one has some problems, so i was changing from time to time. On Volumio cd playback is behind a paywall, nanomesher cd plugin runs cd drive too fast (its very loud). Raudio on the other hand tends to lag and interrupt cd playback. So i thought that maybe i would be able to make one. Yes, without a web interface, but lcd and buttons are even better for me. 
 
 ## What is not yet done?
--airplay integration<br>
--maybe spotify connect<br>
 -maybe usb playback<br>
--maybe eink instead of lcd<br>
+-maybe another display<br>
 -maybe webui as an alternative to buttons<br>
 ...<br>
 
