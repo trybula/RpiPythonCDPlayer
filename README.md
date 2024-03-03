@@ -44,8 +44,8 @@ Some time ago i made an amplifier using tpa3116 (i will put the shematic someday
     <ul>
       <li><a href="https://blog.himbeer.me/2018/12/27/how-to-connect-a-pcm5102-i2s-dac-to-your-raspberry-pi/">DAC PCM5102 setup</a></li>
       <li><a href="https://www.youtube.com/watch?v=cVdSc8VYVBM">1602 LCD setup</a></li>
-      <li><a href="https://pimylifeup.com/raspberry-pi-airplay-receiver/">Airplay setup</a></li>
-      <li><a href="https://medium.com/@gamunu/enable-high-quality-audio-on-linux-6f16f3fe7e1f">PulseAudio quality settings</a></li>
+      <li><s><a href="https://pimylifeup.com/raspberry-pi-airplay-receiver/">Airplay setup</a></s></li>
+      <li><s><a href="https://medium.com/@gamunu/enable-high-quality-audio-on-linux-6f16f3fe7e1f">PulseAudio quality settings</a></s></li>
       <li><a href="https://peppe8o.com/epaper-eink-raspberry-pi/">Epaper display tutorial (EPD comming soon)</a></li>
       <li><a href="https://github.com/nicokaiser/rpi-audio-receiver">Bluetooth</a></li>
       <li><a href="https://stackoverflow.com/questions/74657226/receiving-audio-data-and-metadata-from-iphone-over-bluetooth-python">Bluetooth metadata readout</a></li>
