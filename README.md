@@ -26,6 +26,8 @@ Some time ago i made an amplifier using tpa3116 (i will put the shematic someday
       <li>adafruit-circuitpython-charlcd</li>
       <li>digitalio</li>
       <li>pylast</li>
+      <li>pycairo</li>
+      <li>PyGObject</li>
     </ul>
   <li>Apt</li>
     <ul>
@@ -37,6 +39,9 @@ Some time ago i made an amplifier using tpa3116 (i will put the shematic someday
       <li>libdiscid0-dev</li>
       <li>python3-pip (I assume that python is already installed by default)</li>
       <li>vlc</li>
+      <li>libcairo2-dev</li>
+      <li>libxt-dev</li>
+      <li>libgirepository1.0-dev</li>
     </ul>
   <li>Useful links</li>
     <ul>
