@@ -13,7 +13,7 @@ Some time ago i made an amplifier using tpa3116 (i will put the shematic someday
 ## Dependencies
 ⚠ I'm sure that this list is not full and not in correct order.
 <ul>
-  <li>Pip</li>
+  <li>Pip (requirements.txt)</li> 
     <ul>
       <li>pycdio (❗ I couldn't install it on windows idk why, on linux on rpi it installed flawlessy)</li>
       <li>setuptools </li>
