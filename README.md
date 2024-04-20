@@ -1,10 +1,10 @@
 # <strong>Raspberry Pi CD Player </Strong> <sub>(in python)</sub>
-A simple and very lightweight cd player written in python (using vlc) made for raspberry pi (in my case Rpi 3b+, but it uses ~1.5% Cpu) with 1602 lcd and six buttons.
+A simple and very lightweight cd player written in python (using vlc) made for raspberry pi (in my case Rpi 3b+, but it uses ~1.5% Cpu) with 1602 lcd and six buttons. I highly recommend using it inside a venv!
 
 ## Why i made it?
 Some time ago i made an amplifier using tpa3116 (i will put the shematic someday) to replace my cheap Panasonic. As i was suprised with change of quality event with same speakers i thought that it would also be nice if i made an cd player (i mostly play music from my cd collection). For ~1.5 year i was using either [Volumio](https://volumio.com/en/get-started/)  and [Raudio](https://github.com/rern/raudio). Why either? Each one has some problems, so i was changing from time to time. On Volumio cd playback is behind a paywall, nanomesher cd plugin runs cd drive too fast (its very loud). Raudio on the other hand tends to lag and interrupt cd playback. So i thought that maybe i would be able to make one. Yes, without a web interface, but lcd and buttons are even better for me. 
 
-## What is not yet done?
+## What im planning to add?
 -maybe usb playback<br>
 -maybe another display<br>
 -maybe webui as an alternative to buttons<br>
