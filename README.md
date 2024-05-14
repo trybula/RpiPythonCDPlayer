@@ -6,9 +6,10 @@ Some time ago i made an amplifier using tpa3116 (i will put the shematic someday
 
 ## What im planning to add?
 -maybe usb playback<br>
--maybe another display<br>
+<s>-maybe another display<br></s>
 -maybe webui as an alternative to buttons<br>
-...<br>
+-change 5 pushbuttons to 5 way navigational button
+
 
 ## Dependencies
 ⚠ I'm sure that this list is not full and not in correct order.
