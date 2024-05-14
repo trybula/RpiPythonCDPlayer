@@ -28,6 +28,7 @@ Some time ago i made an amplifier using tpa3116 (i will put the shematic someday
       <li>pylast</li>
       <li>pycairo</li>
       <li>PyGObject</li>
+      <li>timeout_decorator</li>
     </ul>
   <li>Apt</li>
     <ul>
