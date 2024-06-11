@@ -1,3 +1,5 @@
+# ⚠️RESPOSITORY IN WORK⚠️
+
 # <strong>Raspberry Pi CD Player </Strong> <sub>(in python)</sub>
 A simple and very lightweight cd player written in python (using vlc) made for raspberry pi (in my case Rpi 3b+, but it uses ~1.5% Cpu) with 1602 lcd and six buttons. I highly recommend using it inside a venv!
 
