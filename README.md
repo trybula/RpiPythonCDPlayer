@@ -12,13 +12,12 @@ Some time ago i made an amplifier using tpa3116 (i will put the shematic someday
 
 
 ## Dependencies
-⚠ I'm sure that this list is not full and not in correct order.
 <ul>
   <li>Pip</li> 
     <ul>
       <li>requirements.txt</li>
     </ul>
-  <li>Apt</li>
+  <li>Apt</li> 
     <ul>
       <li>libiso9660-dev</li>
       <li>libcdio-dev</li>
@@ -31,6 +30,7 @@ Some time ago i made an amplifier using tpa3116 (i will put the shematic someday
       <li>libcairo2-dev</li>
       <li>libxt-dev</li>
       <li>libgirepository1.0-dev</li>
+      <li>(there may be something still missing on this list...)</li>
     </ul>
   <li>Useful links</li>
     <ul>
