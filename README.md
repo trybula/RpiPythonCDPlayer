@@ -8,7 +8,7 @@ Some time ago i made an amplifier using tpa3116 (i will put the shematic someday
 -maybe usb playback<br>
 <s>-maybe another display<br></s>
 -maybe webui as an alternative to buttons<br>
--change 5 pushbuttons to 5 way navigational button
+-change 5 pushbuttons to 5 way navigational button✅
 
 
 ## Dependencies
