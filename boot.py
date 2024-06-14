@@ -22,7 +22,8 @@ import configparser
 
 #------------PARSING CONFIG-------------
 config = configparser.ConfigParser()
-config.read('config.ini')
+dir_path = os.path.dirname(os.path.realpath(__file__))
+config.read(dir_path + '/config.ini')
 is_lastfm = config.getboolean('Last_Fm', 'Enable')
 API_SECRET = config.get('Last_Fm', 'Api_secret')
 os.environ['LAST_FM_API_SECRET'] = API_SECRET
