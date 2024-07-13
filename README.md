@@ -27,7 +27,9 @@ Some time ago i made an amplifier using tpa3116 (i will put the shematic someday
       <li>libdiscid0-dev</li>
       <li>python3-pip (I assume that python is already installed by default)</li>
       <li>vlc</li>
+      <li>python3.11-dev</li>
       <li>libcairo2-dev</li>
+      <li>python3.11-venv</li>
       <li>libxt-dev</li>
       <li>libgirepository1.0-dev</li>
       <li>(there may be something still missing on this list...)</li>
