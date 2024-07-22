@@ -201,10 +201,9 @@ def PlayCd(conn):
         while True:
             dump = conn.recv()
             index = medialist.index_of_item(listplayer.get_media_player().get_media())
-            conn.send([index+1, i_tracks, track_list[index], artists[index], album, MsToTime(player.get_time(), player.get_length()), player.get_state()])
             match dump:
                 case 0:
-                    pass
+                    conn.send([index+1, i_tracks, track_list[index], artists[index], album, MsToTime(player.get_time(), player.get_length()), player.get_state()])
                 #case 1:
                     #listplayer.play()
                 case 2:
@@ -219,8 +218,10 @@ def PlayCd(conn):
                     listplayer.next()
                     #last_scrobble=""
                 case 5:
-                    listplayer.previous()
-                    #last_scrobble=""
+                    if(player.get_position()>0.4):
+                        player.set_position(0)
+                    else:
+                        listplayer.previous()
             if((player.get_position()*100 > 50) and last_scrobble != track_list[index]):
                 last_scrobble= track_list[index]
                 try:
@@ -274,19 +275,51 @@ class BtPlayer(object):
         def __init__(self):
             super().__init__('No music bluetooth device was found')  
 
+def next(event):
+    global run, command
+    match page:
+        case 0:
+            if(not run):
+                command = 4
+            else:
+                parent_conn.send(4)
+        case 1:
+            
+            command = 4
+def back(event):
+    global run, command
+    match page:
+        case 0:
+            if(not run):
+                command = 5
+            else:
+                parent_conn.send(5)
+        case 1:
+            
+            command = 5
+def stop(event):
+    global run, command
+    match page:
+        case 0:
+            parent_conn.send(3)
+        case 1:
+            command = 3
+def pause(event):
+    global run, command
+    match page:
+        case 0:
+            parent_conn.send(2)
+        case 1:
+            command = 2
 
-
-GPIO.add_event_detect(BUTTONS["Right"], GPIO.FALLING, callback=lambda event: globals().update(command = 4), bouncetime=1000) #forward
-GPIO.add_event_detect(BUTTONS["Left"], GPIO.FALLING, callback=lambda event: globals().update(command = 5), bouncetime=1000) #previous
-GPIO.add_event_detect(BUTTONS["Down"], GPIO.FALLING, callback=lambda event: globals().update(command = 3), bouncetime=1000) #stop
-GPIO.add_event_detect(BUTTONS["Up"], GPIO.FALLING, callback=lambda event: globals().update(command = 2), bouncetime=1000) #pause
+GPIO.add_event_detect(BUTTONS["Right"], GPIO.FALLING, callback=next, bouncetime=100) #forward
+GPIO.add_event_detect(BUTTONS["Left"], GPIO.FALLING, callback=back, bouncetime=100) #previous
+GPIO.add_event_detect(BUTTONS["Down"], GPIO.FALLING, callback=stop, bouncetime=100) #stop
+GPIO.add_event_detect(BUTTONS["Up"], GPIO.FALLING, callback=pause, bouncetime=100) #pause
 #GPIO.add_event_detect(BUTTONS[4], GPIO.FALLING, callback=lambda event: globals().update(command = 1), bouncetime=1000) #play
-GPIO.add_event_detect(BUTTONS["Middle"], GPIO.FALLING, callback=lambda event: globals().update(command = -1), bouncetime=1000) #off
+GPIO.add_event_detect(BUTTONS["Middle"], GPIO.FALLING, callback=lambda event: globals().update(command = -1), bouncetime=100) #off
 
 parent_conn, child_conn = Pipe()
-cdplayer = Process(target=PlayCd, args=(child_conn,))
-
-
 lcd.clear()
 
 while True:
@@ -309,6 +342,8 @@ while True:
             lcd.clear()
             lcd.message = "CD Player"
             if(run):
+                lcd.clear()
+                lcd.message = "Loading..."
                 cdplayer = Process(target=PlayCd, args=(child_conn,))
                 cdplayer.start()
                 time.sleep(5)
@@ -318,7 +353,7 @@ while True:
                             cdplayer.join()
                             run = False
                         elif cdplayer.is_alive():
-                            parent_conn.send(command)
+                            parent_conn.send(0)#you must send to recive
                             time.sleep(0.1)
                             dump=parent_conn.recv()
                             if(dump[6] == vlc.State.Ended):
@@ -360,5 +395,5 @@ while True:
                         run=False             
                 command = 0
                 time.sleep(1)
-    time.sleep(1)
+    time.sleep(0.5)
 
