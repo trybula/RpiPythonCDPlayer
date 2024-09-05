@@ -1,4 +1,3 @@
-# A runatboot file
 import vlc #play music
 import time #control time
 import discid #read discid
@@ -8,16 +7,19 @@ import cdio, pycdio #cdtxt & trackcount
 from multiprocessing import Process, Pipe
 import threading #scheduling
 from math import floor#round down
-import signal#last 4 is for LCD
+import signal
 import board
 from digitalio import DigitalInOut
 from adafruit_character_lcd.character_lcd import Character_LCD_Mono
-import RPi.GPIO as GPIO#buttons
 import os
 import pylast
 from pydbus import SystemBus
 import timeout_decorator
 import configparser
+from unidecode import unidecode#decoding characters to their english ASCII version
+from gpiozero import Button
+from subprocess import check_call#for shutdown only
+#from fonts.py import *
 
 
 #------------PARSING CONFIG-------------
@@ -47,18 +49,18 @@ lcd.clear()
 lcd.cursor = False
 lcd.blink = False
 
-GPIO.setmode(GPIO.BCM) #przyciski
-#BUTTONS = [6, 5, 24, 23, 22, 14] #buttons are connected to ground
-BUTTONS = {"Up":config.getint('Buttons', 'Up'), "Right":config.getint('Buttons', 'Right'), "Left":config.getint('Buttons', 'Left'), "Middle": config.getint('Buttons', 'Middle'), "Down":config.getint('Buttons', 'Down')}
-for button in BUTTONS:
-    GPIO.setup(BUTTONS[button], GPIO.IN, pull_up_down=GPIO.PUD_UP)
-
+Button_up = Button(config.get('Buttons', 'Up'))
+Button_right = Button(config.get('Buttons', 'Right'))
+Button_left = Button(config.get('Buttons', 'Left'))
+Button_middle = Button(config.get('Buttons', 'Middle'))
+Button_down = Button(config.get('Buttons', 'Down'))
 
 
 command = 0 # 0-nothing 1-play 2-pause 3-stop 4-next 5-prev
 textb = 15
 page = 0
 MAX_PAGE = 1
+start = 0
 
 playchar = [
     0b01000,
@@ -244,9 +246,9 @@ def ShowCd(dump):
         textb+=1
     else:
         TrimMessage=dump[2]
-    lcd.message=TrimMessage #title
+    lcd.message=unidecode(TrimMessage) #title
     lcd.cursor_position(0,1)
-    lcd.message=dump[5] # time
+    lcd.message=unidecode(dump[5]) # time
     lcd.cursor_position(15,1)
     match dump[6]:
         case vlc.State.Playing:
@@ -275,7 +277,7 @@ class BtPlayer(object):
         def __init__(self):
             super().__init__('No music bluetooth device was found')  
 
-def next(event):
+def next():
     global run, command
     match page:
         case 0:
@@ -286,7 +288,7 @@ def next(event):
         case 1:
             
             command = 4
-def back(event):
+def back():
     global run, command
     match page:
         case 0:
@@ -297,27 +299,39 @@ def back(event):
         case 1:
             
             command = 5
-def stop(event):
+def stop():
     global run, command
     match page:
         case 0:
             parent_conn.send(3)
         case 1:
             command = 3
-def pause(event):
+def pause():
     global run, command
     match page:
         case 0:
             parent_conn.send(2)
         case 1:
             command = 2
+def middle():
+    global command, start
+    start = time.time()
+    command = -1
 
-GPIO.add_event_detect(BUTTONS["Right"], GPIO.FALLING, callback=next, bouncetime=100) #forward
-GPIO.add_event_detect(BUTTONS["Left"], GPIO.FALLING, callback=back, bouncetime=100) #previous
-GPIO.add_event_detect(BUTTONS["Down"], GPIO.FALLING, callback=stop, bouncetime=100) #stop
-GPIO.add_event_detect(BUTTONS["Up"], GPIO.FALLING, callback=pause, bouncetime=100) #pause
-#GPIO.add_event_detect(BUTTONS[4], GPIO.FALLING, callback=lambda event: globals().update(command = 1), bouncetime=1000) #play
-GPIO.add_event_detect(BUTTONS["Middle"], GPIO.FALLING, callback=lambda event: globals().update(command = -1), bouncetime=100) #off
+def shutdown():
+    global start
+    end = time.time()
+    if(end-start>2):
+        lcd.clear()
+        lcd.message="Goodbye"
+        check_call(['sudo', 'poweroff'])
+
+Button_up.when_pressed = pause
+Button_left.when_pressed = back
+Button_right.when_pressed = next
+Button_down.when_pressed = stop
+Button_middle.when_pressed = middle
+Button_middle.when_released = shutdown
 
 parent_conn, child_conn = Pipe()
 lcd.clear()
