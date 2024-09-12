@@ -314,17 +314,18 @@ def pause():
         case 1:
             command = 2
 def middle():
-    global command, start
+    global start
     start = time.time()
-    command = -1
 
 def shutdown():
-    global start
+    global start, command
     end = time.time()
     if(end-start>2):
         lcd.clear()
         lcd.message="Goodbye"
         check_call(['sudo', 'poweroff'])
+    else:
+        command = -1
 
 Button_up.when_pressed = pause
 Button_left.when_pressed = back
