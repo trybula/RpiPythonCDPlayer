@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CD Socket.IO Client</title>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <style>
+        .tab{
+            display: inline;
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+    <span id="status">Server disconnected</span>
+    <form id="nameForm">
+        <button type="submit" >Request data</button>
+    </form>
+    <div id="response">
+        Track:          <div class="tab">...</div> <span id="track"></span><br>
+        Total tracks:   <div class="tab">...</div> <span id="tot_track"></span><br>
+        Title:          <div class="tab">...</div> <span id="title"></span><br>
+        Artist:         <div class="tab">...</div> <span id="artist"></span><br>
+        Album:          <div class="tab">...</div> <span id="album"></span><br>
+        Time:           <div class="tab">...</div> <span id="time"></span><br>
+    </div>
+
+    <script>
+        // Connect to the Socket.IO server
+        const socket = io('http://127.0.0.1:5000');
+        status_box=document.querySelector("#status");
+        socket.on("connect", () => {
+            status_box.innerHTML = "Server connected";
+        });
+        socket.on("disconnect", () => {
+            status_box.innerHTML = "Server disconnected";
+        });
+        document.getElementById('nameForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent the form from submitting the traditional way
+            socket.emit('request_data', null);
+        });
+        // Listen for the "hello_response" event from the server
+        socket.on('playing_data', function(data) {
+            console.log(data);
+            document.getElementById('track').innerHTML=data[0];
+            document.getElementById('tot_track').innerHTML=data[1];
+            document.getElementById('title').innerHTML=data[2];
+            document.getElementById('artist').innerHTML=data[3];
+            document.getElementById('album').innerHTML=data[4];
+            document.getElementById('time').innerHTML=data[5];
+        });
+                // Function to send a request every second
+        function sendRequest() {
+            socket.emit('request_data', null);
+        }
+
+        // Set the interval to 1 second (1000 milliseconds)
+        const intervalId = setInterval(sendRequest, 1000);
+
+        // To stop sending requests, you can use clearInterval(intervalId)
+        // clearInterval(intervalId);
+
+    </script>
+</body>
+</html>
+
