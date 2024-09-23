@@ -24,6 +24,7 @@ Some time ago i made an amplifier using tpa3116 (i will put the shematic someday
       <li>cython</li>
       <li>libdiscid0-dev</li>
       <li>python3-pip</li>
+      <li>py3-gpiozero</li>
       <li>vlc</li>
       <li>gcc</li>
       <li>python3.11-dev</li>
