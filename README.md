@@ -17,20 +17,20 @@ Some time ago i made an amplifier using tpa3116 (i will put the shematic someday
     </ul>
   <li>Apt</li> 
     <ul>
-      <li>libiso9660-dev</li>
+      <li><s>libiso9660-dev</s></li>
       <li>libcdio-dev</li>
-      <li>libcdio-utils</li>
+      <li><s>libcdio-utils</s></li>
       <li>swig</li>
       <li>cython</li>
       <li>libdiscid0-dev</li>
-      <li>python3-pip (I assume that python is already installed by default)</li>
+      <li>python3-pip</li>
       <li>vlc</li>
+      <li>gcc</li>
       <li>python3.11-dev</li>
       <li>libcairo2-dev</li>
       <li>python3.11-venv</li>
       <li>libxt-dev</li>
       <li>libgirepository1.0-dev</li>
-      <li>(there may be something still missing on this list...)</li>
     </ul>
   <li>Useful links</li>
     <ul>
