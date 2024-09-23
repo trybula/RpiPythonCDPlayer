@@ -44,3 +44,8 @@ Some time ago i made an amplifier using tpa3116 (i will put the shematic someday
       <li><a href="https://stackoverflow.com/questions/74657226/receiving-audio-data-and-metadata-from-iphone-over-bluetooth-python">Bluetooth metadata readout</a></li>
     </ul>
 </ul>
+
+## Alpine linux
+Recently I switched from raspbian to Alpine to reduce boot time. Tools like [this](https://github.com/macmpi/alpine-linux-headless-bootstrap) really make it simpler to setup. 
+However I was still struggling with gpio permision problems ( [solution](https://raspberrypi.stackexchange.com/questions/40105/access-gpio-pins-without-root-no-access-to-dev-mem-try-running-as-root)  ), and needed to compile lgpio from source ([script](install_scripts/lgpio_compile.sh)), but libiso9660 and libcdio-utils installation wasn't nessesary.
+Apart from that, everything works as it should. 
