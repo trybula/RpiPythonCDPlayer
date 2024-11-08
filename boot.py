@@ -1,3 +1,4 @@
+# A runatboot file
 import vlc #play music
 import time #control time
 import discid #read discid
@@ -50,7 +51,7 @@ lcd.cursor = False
 lcd.blink = False
 
 Button_up = Button(config.get('Buttons', 'Up'))
-Button_right = Button(config.get('Buttons', 'Right'))
+Button_right = Button(config.get('Buttons', 'Right'),bounce_time=0.05)
 Button_left = Button(config.get('Buttons', 'Left'))
 Button_middle = Button(config.get('Buttons', 'Middle'))
 Button_down = Button(config.get('Buttons', 'Down'))
@@ -59,7 +60,7 @@ Button_down = Button(config.get('Buttons', 'Down'))
 command = 0 # 0-nothing 1-play 2-pause 3-stop 4-next 5-prev
 textb = 15
 page = 0
-MAX_PAGE = 1
+MAX_PAGE = 2
 start = 0
 
 playchar = [
@@ -236,6 +237,70 @@ def PlayCd(conn):
                     print("Scrobbling failed: " + artists[index] + track_list[index] + album + str(time.time()))
                     print("Reason? ->")
                     print(e)
+
+def loop_media(event):
+    print("Station ended. Moving to next station...")
+    listplayer.next()
+
+def PlayRadio(conn):
+    instance = vlc.Instance()
+    player = instance.media_player_new()
+    listplayer = instance.media_list_player_new()
+    listplayer.set_media_player(player)
+
+    # Create a playlist
+    playlist = instance.media_list_new()
+
+    radio_stations = {
+    "RP Main mix": "http://stream.radioparadise.com/flacm",
+    "RP Mellow mix": "http://stream.radioparadise.com/mellow-flacm",
+    "RP Rock mix": "http://stream.radioparadise.com/rock-flacm",
+    "RP Global mix": "http://stream.radioparadise.com/global-flacm",
+    "Radio 357": "https://stream.radio357.pl",
+    "Tok Fm": "http://radiostream.pl/tuba10-1.mp3",
+    "Rock Radio": "http://radiostream.pl/tuba8-1.mp3"
+    }
+    i_tracks = len(radio_stations)
+    # Add streams to the playlist
+    for station_name, stream_url in radio_stations.items():
+        media = instance.media_new(stream_url)
+        media.set_meta(vlc.Meta.Title, station_name)
+        playlist.add_media(media)
+
+    # Set the media list to the player
+    listplayer.set_media_list(playlist)
+
+    # Register the callback
+    event_manager = player.event_manager()
+    event_manager.event_attach(vlc.EventType.MediaPlayerEndReached, loop_media)
+
+    # Start playing the first item in the playlist
+    print("Playing Radio Paradise streams...")
+    listplayer.play()
+    while True:
+        dump = conn.recv()
+        index = playlist.index_of_item(listplayer.get_media_player().get_media())
+        current_media = player.get_media()
+        match dump:
+            case 0:
+                conn.send([index+1, i_tracks, list(radio_stations.keys())[index], current_media.get_meta(vlc.Meta.Artist),current_media.get_meta(vlc.Meta.Album), MsToTime(player.get_time(), player.get_length()), player.get_state()])
+            #case 1:
+                #listplayer.play()
+            case 2:
+                if(player.get_state() == vlc.State.Stopped):
+                    listplayer.play()
+                else:
+                    listplayer.pause()
+            case 3:
+                listplayer.stop()
+                #last_scrobble=""
+            case 4:
+                listplayer.next()
+                #last_scrobble=""
+            case 5:
+                listplayer.previous()
+
+
 def ShowCd(dump):
     global textb
     lcd.clear()
@@ -285,6 +350,11 @@ def next():
                 command = 4
             else:
                 parent_conn.send(4)
+        case 2:
+            if(not run):
+                command = 4
+            else:
+                parent_conn.send(4)
         case 1:
             
             command = 4
@@ -292,6 +362,11 @@ def back():
     global run, command
     match page:
         case 0:
+            if(not run):
+                command = 5
+            else:
+                parent_conn.send(5)
+        case 2:
             if(not run):
                 command = 5
             else:
@@ -304,12 +379,16 @@ def stop():
     match page:
         case 0:
             parent_conn.send(3)
+        case 2:
+            parent_conn.send(3)
         case 1:
             command = 3
 def pause():
     global run, command
     match page:
         case 0:
+            parent_conn.send(2)
+        case 2:
             parent_conn.send(2)
         case 1:
             command = 2
@@ -410,5 +489,33 @@ while True:
                         run=False             
                 command = 0
                 time.sleep(1)
+        case 2:
+            lcd.clear()
+            lcd.message = "Internet\nRadio"
+            if(run):
+                lcd.clear()
+                lcd.message = "Loading..."
+                cdplayer = Process(target=PlayRadio, args=(child_conn,))
+                cdplayer.start()
+                time.sleep(2)
+                while(run):
+                        if command == -1 and cdplayer.is_alive():
+                            cdplayer.kill()
+                            cdplayer.join()
+                            run = False
+                        elif cdplayer.is_alive():
+                            parent_conn.send(0)#you must send to recive
+                            time.sleep(0.1)
+                            dump=parent_conn.recv()
+                            if(dump[6] == vlc.State.Ended):
+                                cdplayer.kill()
+                                cdplayer.join()
+                                lcd.clear()
+                                run = False
+                            else:
+                                ShowCd(dump)
+                        else:
+                            run = False
+                        command=0
+                        time.sleep(1)
     time.sleep(0.5)
-
